@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>CODE EDITOR</title>
+	<style>
+		body{
+		margin:0;
+		padding:0;
+		font-family: sans-serif;
+		font-weight:bold;
+		}
+		#wrapper{
+			background-color:lightSkyBlue;
+			background-image: url('http://trainsoftbg.com/images/posts/html_css_js.png');
+			background-repeat: no-repeat;
+			background-position:130px 70px;
+			background-size: 80% 87%;
+			width:100%;
+			height:680px;
+		}
+		#menuBar{
+			background-color: #121314;
+			color:white;
+			width:100%;
+			margin-top:10px;
+			height:50px;
+			text-align: center;
+			display:inline-block;
+		}
+		
+		button{
+			margin: 10px;
+			width:9%;
+			padding:5px;
+			background-color:lightSkyBlue;
+			font-weight:bold;
+			color:white;
+			font-size:0.8em;
+			border-radius:15%;
+		}
+		#title{
+			float:left;
+			margin: 10px;
+			font-size:1.2em;
+			background-color:#010005;
+			color:blue;
+			padding:5px;
+			border-radius:15%;
+		}
+		#title span{
+			font-size:0.8em;
+		}
+		#result{
+			float:right;
+			margin-right:50px;
+			width:10%;
+		}
+		.code{
+			
+		}
+		textarea, iframe {
+			background-color:#121314;
+			font-size:1.5em;
+			color:white;
+			width:100%;
+			margin-top:10px;
+			border:none;
+			resize:none;
+			//height:620px;
+			display:none;
+		}
+		.selector{
+			background-color:#010005;
+			color: blue;
+		}
+		.selected{
+			display:block;
+		}
+		
+		
+	</style>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	
+</head>
+
+<body>
+
+	<div id = "wrapper">
+		<div id = "menuBar">
+			<div id = title  >			AutoCode :: <span>Code Editor</span>	</div>
+			<button id = 'html'>		HTML	</button>
+			<button id = 'css'>			CSS	</button>				 
+			<button id = 'js'>			JAVASCRIPT	</button>
+			<button id = 'console'>		CONSOLE	</button>  
+			<button id = 'result'>		RUN	</button> 
+		</div>
+		<div class = "code">
+			<textarea id = "htmlCode">	<p>After hitting the Run button :<br /> - if you can read this in green .. it means that the editor can excute HTML & CSS..<br />
+ - if you got an alert .. that means javascript is also excuted ALHAMDULILLAH!!</p> </textarea>
+			<textarea id = "cssCode">	p{font-size:40px;color:green;margin:200px;background-color:lightyellow} </textarea>
+			<textarea id = "jsCode">	alert('hello.. from JAVASCRIPT field');</textarea>
+			<iframe	  id = "consoleCode" allowfullscreen></iframe>
+			<iframe   id = "resultCode"></iframe>
+		</div>	
+	</div>
+	<script>
+			$().ready(function(){
+				$('button').click(function(){
+					$('button').removeClass('selector');
+					$('#title').css({'background-color':'lightSkyBlue', 'color':'white'});
+					$(this).addClass('selector');
+					$('.code').children().hide();
+					var id = $(this).attr('id');
+					$('#'+ id+ 'Code').show();
+				});
+				$('#title').click(function(){
+					$('button').removeClass('selector');
+					$(this).css({'background-color':'#010005','color':'blue'});
+					$('.code').children().hide();
+				});
+				$('#result').click(function(){
+					$('#resultCode').contents().find('html').html(
+						'<style>' + $('#cssCode').val() + '</style>' + $('#htmlCode').val()
+					);
+					document.getElementById('resultCode').contentWindow.eval($('#jsCode').val());
+				});
+				$('textarea').css('min-height',$(window).height());
+				$('iframe').css('min-height',$(window).height());
+				$('#wrapper').css('min-height',$(window).height());
+			});
+			
+			
+	</script>
+	
+</body>
+</html>
